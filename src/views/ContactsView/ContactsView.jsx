@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import css from './ContactsView.module.scss';
 import ContactForm from '../../components/ContactForm';
@@ -8,12 +7,15 @@ import Filter from '../../components/Filter';
 import ContactList from '../../components/ContactList';
 import { contactsSls, contactsOps } from '../../redux/contacts';
 
-const ContactsView = ({ isLoading, error }) => {
+const ContactsView = () => {
     const dispatch = useDispatch();
+
+    const isLoading = useSelector(contactsSls.getLoading);
+    const error = useSelector(contactsSls.getError);
 
     useEffect(() => {
         dispatch(contactsOps.loadContacts());
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [dispatch]);
 
     return (
         <div className={css.contactsView}>
@@ -44,14 +46,4 @@ const ContactsView = ({ isLoading, error }) => {
     );
 };
 
-ContactsView.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    error: PropTypes.oneOfType([PropTypes.object, PropTypes.oneOf([null])]),
-};
-
-const mapStateToProps = state => ({
-    isLoading: contactsSls.getLoading(state),
-    error: contactsSls.getError(state),
-});
-
-export default connect(mapStateToProps)(ContactsView);
+export default ContactsView;

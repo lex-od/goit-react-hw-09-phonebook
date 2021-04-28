@@ -22,7 +22,7 @@ const Phonebook = () => {
 
     useEffect(() => {
         dispatch(authOps.getCurrentUser());
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [dispatch]);
 
     return (
         <Container>

@@ -1,86 +1,78 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import css from './RegisterView.module.scss';
 import { authOps } from '../../redux/auth';
 
-class RegisterView extends Component {
-    state = {
+export default function RegisterView() {
+    const [registerData, setRegisterData] = useState({
         name: '',
         email: '',
         password: '',
+    });
+
+    const dispatch = useDispatch();
+
+    const handleChange = ({ target: { name, value } }) => {
+        setRegisterData(state => ({ ...state, [name]: value }));
     };
 
-    handleChange = ({ target: { name, value } }) => {
-        this.setState({ [name]: value });
-    };
-
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
 
-        this.props.dispRegister(this.state);
+        dispatch(authOps.register(registerData));
 
-        this.setState({ name: '', email: '', password: '' });
+        setRegisterData({ name: '', email: '', password: '' });
     };
 
-    render() {
-        const { name, email, password } = this.state;
+    return (
+        <div className={css.registerView}>
+            <h1 className={css.title}>Заполните для регистрации</h1>
 
-        return (
-            <div className={css.registerView}>
-                <h1 className={css.title}>Заполните для регистрации</h1>
+            <form
+                onSubmit={handleSubmit}
+                className={css.form}
+                autoComplete="off"
+            >
+                <label className={css.label}>
+                    <span className={css.labelText}>Имя</span>
+                    <input
+                        type="text"
+                        name="name"
+                        value={registerData.name}
+                        onChange={handleChange}
+                        className={css.input}
+                        required
+                    />
+                </label>
 
-                <form
-                    onSubmit={this.handleSubmit}
-                    className={css.form}
-                    autoComplete="off"
-                >
-                    <label className={css.label}>
-                        <span className={css.labelText}>Имя</span>
-                        <input
-                            type="text"
-                            name="name"
-                            value={name}
-                            onChange={this.handleChange}
-                            className={css.input}
-                            required
-                        />
-                    </label>
+                <label className={css.label}>
+                    <span className={css.labelText}>Почта</span>
+                    <input
+                        type="email"
+                        name="email"
+                        value={registerData.email}
+                        onChange={handleChange}
+                        className={css.input}
+                        required
+                    />
+                </label>
 
-                    <label className={css.label}>
-                        <span className={css.labelText}>Почта</span>
-                        <input
-                            type="email"
-                            name="email"
-                            value={email}
-                            onChange={this.handleChange}
-                            className={css.input}
-                            required
-                        />
-                    </label>
+                <label className={css.label}>
+                    <span className={css.labelText}>Пароль</span>
+                    <input
+                        type="password"
+                        name="password"
+                        value={registerData.password}
+                        onChange={handleChange}
+                        className={css.input}
+                        required
+                    />
+                </label>
 
-                    <label className={css.label}>
-                        <span className={css.labelText}>Пароль</span>
-                        <input
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={this.handleChange}
-                            className={css.input}
-                            required
-                        />
-                    </label>
-
-                    <button type="submit" className={css.registerBtn}>
-                        Зарегистрироваться
-                    </button>
-                </form>
-            </div>
-        );
-    }
+                <button type="submit" className={css.registerBtn}>
+                    Зарегистрироваться
+                </button>
+            </form>
+        </div>
+    );
 }
-
-const mapDispatchToProps = {
-    dispRegister: authOps.register,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterView);
