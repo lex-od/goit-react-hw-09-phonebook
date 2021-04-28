@@ -1,0 +1,61 @@
+.loginView {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.title {
+    margin-bottom: 30px;
+
+    color: #e6d7ae;
+}
+
+.form {
+    width: 350px;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+
+    + .label {
+        margin-top: 15px;
+    }
+}
+
+.labelText {
+    margin-bottom: 5px;
+
+    font-weight: 500;
+}
+
+.input {
+    padding: 0px 5px;
+
+    background-color: #f3f3f3;
+    border: 2px solid #adaca4;
+    border-radius: 5px;
+
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #272424;
+}
+
+.loginBtn {
+    margin-top: 30px;
+    padding: 5px 10px;
+
+    background-color: #e6d7ae;
+    border: 2px solid #adaca4;
+
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-weight: 500;
+    font-size: 18px;
+    color: #272424;
+
+    &:hover {
+        background-color: #ffc966;
+    }
+}

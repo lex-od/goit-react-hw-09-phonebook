@@ -1,0 +1,17 @@
+.contactList {
+    width: 350px;
+}
+
+.contactItem {
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-bottom: 15px;
+    padding: 5px 60px 5px 10px;
+
+    background-color: #363131;
+    border-radius: 5px;
+    overflow: hidden;
+}
