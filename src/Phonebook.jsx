@@ -1,6 +1,5 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Redirect, Switch } from 'react-router';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Loader from 'react-loader-spinner';
 // import css from './styles/Phonebook.module.scss';
@@ -40,24 +39,26 @@ const Phonebook = () => {
                 }
             >
                 <Switch>
-                    <PublicRoute exact path={HOME} component={HomeView} />
+                    <PublicRoute path={HOME} exact>
+                        <HomeView />
+                    </PublicRoute>
+
+                    <PrivateRoute path={CONTACTS} redirectTo={LOGIN}>
+                        <ContactsView />
+                    </PrivateRoute>
+
                     <PublicRoute
+                        restricted
                         path={REGISTER}
-                        restricted
                         redirectTo={CONTACTS}
-                        component={RegisterView}
-                    />
-                    <PublicRoute
-                        path={LOGIN}
-                        restricted
-                        redirectTo={CONTACTS}
-                        component={LoginView}
-                    />
-                    <PrivateRoute
-                        path={CONTACTS}
-                        redirectTo={LOGIN}
-                        component={ContactsView}
-                    />
+                    >
+                        <RegisterView />
+                    </PublicRoute>
+
+                    <PublicRoute restricted path={LOGIN} redirectTo={CONTACTS}>
+                        <LoginView />
+                    </PublicRoute>
+
                     <Redirect to={HOME} />
                 </Switch>
             </Suspense>
